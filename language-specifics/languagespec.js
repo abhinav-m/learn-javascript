@@ -35,7 +35,7 @@ console.log("Should be 10" + firstProp.prop);
 console.log("Should be 11" + secondProp.prop);
 console.log("Should be 12" + thirProp.prop);
 
-//Example on making properties private using closure.
+//Example on making properties private using closure. 	
 //Should reference inner property value
 console.log("Should be 10 "+ myPrivProp.getProp());
 myPrivProp.setProp(11);
