@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+    <script>
+        window.onload = test;
+        //This will execute when all content on the page is loaded ,
+        //DOM external CSS , images ,scripts etc. 
+        //Jquery's document.ready function is an abstraction and implementation of
+        //window.onDOMCONTENTLOADED , which fires when the DOM is ready and loaded in the browser, it doesn't wait for images/ etc.
+        //this is mostly done due to better cross browser support, jquery internally handles this for you.
+        //NOTE: onload is standard to the DOM ready event is applicable to jquery. 
+        //Purpose of ready event is that it should occur as early as possible after the document has loaded, so the code that 
+        //adds functionality to the page DOESNT wait for all content to load.
+        function test() {
+            document.getElementById("test").innerHTML = "TESTED"
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 text-center" style="color:red">
+                <img src="https://s17.postimg.org/cb3rqbttr/Hot-summer-dog.jpg" class="img-responsive">
+            </div>
+            <div id="test"></div>
+        </div>
+    </div>
+</body>
+
+
+</html>
