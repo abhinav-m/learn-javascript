@@ -1,173 +1,166 @@
 var globalVar;
 
 $(document).ready(function() {
-//Scope example
-//This variable has global scope (window scope) in browser
-globalVar = "globalScope";
-console.log("currently global scope");
-differentScope();
-var object1 = {};
-var object2 = object1;
-console.log(object1==object2);
+    //Scope example
+    //This variable has global scope (window scope) in browser
+    globalVar = "globalScope";
+    console.log("currently global scope");
+    differentScope();
+    var object1 = { a: 1, b: 2, c: 3 };
+    var object2 = object1;
+    console.log(object1 == object2);
 
 
-//Closure examples
-var divByTwo = closureDivideExample(2);
-var divByThree = closureDivideExample(3);
-//Should Print 2 and 3
-console.log(divByTwo(4));
-console.log(divByThree(9));
-//CLOSURE IIFE example
-//This returns incorrectly bounded function to current reference of i
-var exampleObjects = [{prop:10},{prop:5},{prop:6}];
-var setProps = closureWrongWay(exampleObjects);
-var firstProp = setProps[0];
-console.log("Should be 13 "+firstProp.prop());
-var myPrivProp = closurePrivatePropExample();
-//This corrects above problem , and assigns the actual value on each loop iteration by 
-//invoking the function immediately using   Immediately Invoked Function Expression (IIFE)
-var setProps = closureRightWay(exampleObjects);
-var firstProp = setProps[0];
-var secondProp = setProps[1];
-var thirProp = setProps[2];
+    //Closure examples
+    var divByTwo = closureDivideExample(2);
+    var divByThree = closureDivideExample(3);
+    //Should Print 2 and 3
+    console.log(divByTwo(4));
+    console.log(divByThree(9));
+    //CLOSURE IIFE example
+    //This returns incorrectly bounded function to current reference of i
+    var exampleObjects = [{ prop: 10 }, { prop: 5 }, { prop: 6 }];
+    var setProps = closureWrongWay(exampleObjects);
+    var firstProp = setProps[0];
+    console.log("Should be 13 " + firstProp.prop());
+    var myPrivProp = closurePrivatePropExample();
+    //This corrects above problem , and assigns the actual value on each loop iteration by 
+    //invoking the function immediately using   Immediately Invoked Function Expression (IIFE)
+    var setProps = closureRightWay(exampleObjects);
+    var firstProp = setProps[0];
+    var secondProp = setProps[1];
+    var thirProp = setProps[2];
 
-console.log("Should be 10" + firstProp.prop);
-console.log("Should be 11" + secondProp.prop);
-console.log("Should be 12" + thirProp.prop);
+    console.log("Should be 10" + firstProp.prop);
+    console.log("Should be 11" + secondProp.prop);
+    console.log("Should be 12" + thirProp.prop);
 
-//Example on making properties private using closure. 	
-//Should reference inner property value
-console.log("Should be 10 "+ myPrivProp.getProp());
-myPrivProp.setProp(11);
-console.log("Should be 11 "+ myPrivProp.getProp());
+    //Example on making properties private using closure. 	
+    //Should reference inner property value
+    console.log("Should be 10 " + myPrivProp.getProp());
+    myPrivProp.setProp(11);
+    console.log("Should be 11 " + myPrivProp.getProp());
 
-//Optional arguments example
+    //Optional arguments example
 
-optionalArguments(1,2);
-optionalArgumentsExp(2);
+    optionalArguments(1, 2);
+    optionalArgumentsExp(2);
 
-testGlobal();
+    testGlobal();
 });
 
 
 function differentScope() {
-//WRONG! globalVar get's hoisted to the top and console.log prints undefined, not the global variable.
-console.log("different value here for globalVar :"+globalVar);
-var globalVar;
-globalVar = "localFunctionScope";
-console.log("different value here for globalVar :"+globalVar);
+    //WRONG! globalVar get's hoisted to the top and console.log prints undefined, not the global variable.
+    console.log("different value here for globalVar :" + globalVar);
+    var globalVar;
+    globalVar = "localFunctionScope";
+    console.log("different value here for globalVar :" + globalVar);
 
-{
-//Doesnt create a local variable {} is basically an object declaration
- globalVar = "stillFunctionCreatedScope";
-console.log("this is the same variable as outside as { } doesn't create it's own scope. Proof:"+globalVar);
-}
+    {
+        //Doesnt create a local variable {} is basically an object declaration
+        globalVar = "stillFunctionCreatedScope";
+        console.log("this is the same variable as outside as { } doesn't create it's own scope. Proof:" + globalVar);
+    }
 
-{
-//However let keyword allows declaration of block scope local variable
-let globalVar = "blockCreatedScope";
-console.log("'let' keyword allows creation of variables with scope within the current block. Proof:"+globalVar);
-}
+    {
+        //However let keyword allows declaration of block scope local variable
+        let globalVar = "blockCreatedScope";
+        console.log("'let' keyword allows creation of variables with scope within the current block. Proof:" + globalVar);
+    }
 
-console.log("this will print the later initialized variable as it's scope is shared (declared using var) ie function's scope. Proof:"+globalVar);
-globalVar = "changed-in-different-scope";
-}
-
-
-function testGlobal () {
-console.log(" global variable's value.Proof: "+globalVar);
-//This will throw reference error as variables declared with let are TDZ The temporal dead zone is not a syntactic location, but rather the time between the variable (scope) creation and the initialisation.  and not initialised. 
-//let globalVar = "makinitLocal";
+    console.log("this will print the later initialized variable as it's scope is shared (declared using var) ie function's scope. Proof:" + globalVar);
+    globalVar = "changed-in-different-scope";
 }
 
 
-function optionalArguments (a,b,c) {
-//Should print 6
-//If provided with less arguments, one variable will get value undefined, printed value will be NaN.
-//We can use optional arguments as, this gives a "default argument" makes function flexible.
-if(c==undefined)
-c=0;
+function testGlobal() {
+    console.log(" global variable's value.Proof: " + globalVar);
+    //This will throw reference error as variables declared with let are TDZ The temporal dead zone is not a syntactic location, but rather the time between the variable (scope) creation and the initialisation.  and not initialised. 
+    //let globalVar = "makinitLocal";
+}
 
-console.log(a+b+c);
+
+function optionalArguments(a, b, c) {
+    //Should print 6
+    //If provided with less arguments, one variable will get value undefined, printed value will be NaN.
+    //We can use optional arguments as, this gives a "default argument" makes function flexible.
+    if (c == undefined)
+        c = 0;
+
+    console.log(a + b + c);
 
 }
 
 
-function optionalArgumentsExp(a,b){
-	if(b==undefined)
-	b = 2;
-var res = 1;
-for(var count = 0; count<b;count++)
-res = res* a;
-console.log("Prints square if provided with no argument, otherwise can be exponentiated as neede"+res);
+function optionalArgumentsExp(a, b) {
+    if (b == undefined)
+        b = 2;
+    var res = 1;
+    for (var count = 0; count < b; count++)
+        res = res * a;
+    console.log("Prints square if provided with no argument, otherwise can be exponentiated as neede" + res);
 }
 
 
 //Local variables are created each time a function is called, thus using nested function calls can "save/freeze a local variable declaration"
 //This property of Javascript is called closure. Local variables are created for every instance of function called and not "trampled over"
-function closureDivideExample(number)
-{
-	console.log("Value of frozen variable number = "+number);
-	var fn =	function divBy(num) {
-		return num/number;
-	}
+function closureDivideExample(number) {
+    console.log("Value of frozen variable number = " + number);
+    var fn = function divBy(num) {
+        return num / number;
+    }
 
-	return fn;
+    return fn;
 }
 
 
-function closurePrivatePropExample(){
-	var privProp = 10;
+function closurePrivatePropExample() {
+    var privProp = 10;
 
-	 // We are returning an object with some inner functions​
+    // We are returning an object with some inner functions​
     // All the inner functions have access to the outer function's variables​
 
-	return {
-		// This inner function will return the UPDATED privProp variable​
-        // It will return the current value of privProp, even after the setID function changes it
-		getProp: function () {
-			return privProp;
-		},
+    return {
+        // This inner function will return the UPDATED privProp variable​
+        // It will return the current value of privProp, even after the setProp function changes it
+        getProp: function() {
+            return privProp;
+        },
 
-		setProp: function(value) {
-			privProp = value;	
-		}
-	}
+        setProp: function(value) {
+            privProp = value;
+        }
+    }
 
 
 }
 
 
 function closureWrongWay(objects) {
-	var i;
-	var myNum = 10;
-	//Each object's property is being assigned myNum+i
-	//However since the function will be called when the closure get's initialized and used, this will return wrong value.
-	//Value of i will be 3 (last value in loop as loop gets executed in outer function call.) when this function is actually used.
-	for(i=0;i<objects.length;i++)
-		objects[i]["prop"] = function() {
-			return myNum + i;
-		}
+    var i;
+    var myNum = 10;
+    //Each object's property is being assigned myNum+i
+    //However since the function will be called when the closure get's initialized and used, this will return wrong value.
+    //Value of i will be 3 (last value in loop as loop gets executed in outer function call.) when this function is actually used.
+    for (i = 0; i < objects.length; i++)
+        objects[i]["prop"] = function() {
+            return myNum + i;
+        }
 
-		return objects;
+    return objects;
 }
 
 function closureRightWay(objects) {
-	var i;
-	var myNum = 10;
-	//Here we use  Immediately Invoked Function Expression (IIFE) to solve this shortcoming
-	for(i=0;i<objects.length;i++)
-	{
-		objects[i]["prop"] = function(j) {
-			return function (){
-			return myNum+j;
-		}()
-	  }(i);//By adding() at the end of the function we execute it immediately and return value of myNum +j, instead of returning function.
-	}//Immediately invoke the function with current value of i passed to j after each iteration therefore correcting it.
-	return objects;
+    var i;
+    var myNum = 10;
+    //Here we use  Immediately Invoked Function Expression (IIFE) to solve this shortcoming
+    for (i = 0; i < objects.length; i++) {
+        objects[i]["prop"] = function(j) {
+            return function() {
+                return myNum + j;
+            }()
+        }(i); //By adding() at the end of the function we execute it immediately and return value of myNum +j, instead of returning function.
+    } //Immediately invoke the function with current value of i passed to j after each iteration therefore correcting it.
+    return objects;
 }
-
-
-
-
-
