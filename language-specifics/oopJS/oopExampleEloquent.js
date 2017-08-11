@@ -69,14 +69,14 @@ console.log(empty.toString());
 console.log(Object.getPrototypeOf({}) === Object.prototype);
 //This will return NULL as there is nothing upwards the prototype chain of Object.
 console.log(Object.getPrototypeOf(Object.prototype))
-    //Two things to note here:
+    ///A thing to note here:
     //  This will return Object.prototype property(a function) since Object is the base entity,
     //  and has it's own prototype property.
 console.log(Object.getPrototypeOf(Object))
 
 /*
-The prototype relations of JavaScript objects form a tree-shaped struc-
-ture, and at the root of this structure sits Object.prototype . It provides a
+The prototype relations of JavaScript objects form a tree-shaped structure,
+ and at the root of this structure sits Object.prototype . It provides a
 few methods that show up in all objects, such as toString , which converts
 an object to a string representation.
 */
@@ -202,7 +202,7 @@ mercedes.description();
 console.log([1, 2, 3, 4, 5].toString());
 
 //Another proof of the same
-console.log(Object.getPrototypeOf(Array.prototype.toString) === Object.prototype.toString);
+console.log(Array.prototype.toString === Object.prototype.toString);
 //This shows that Array.prototype.toString is not the same as Object.prototype.toString, thus it is not derived
 //Hence it is shadowed/ overridden.
 console.log(Object.prototype.toString.call([1, 2]));
@@ -255,7 +255,7 @@ Object.defineProperty(Object.prototype, "hiddenawful", { enumerable: false, valu
 for (var desc in pizza)
     console.log(desc)
 
-//This will return false
+//This will still return true
 console.log("hiddenawful" in pizza)
     //We still face the issue of the property returning "true" in case of using `in`
     //To solve this issue we can use the object's hasOwnProperty() method.
@@ -378,19 +378,22 @@ myCar.vroom();
 function Truck(...args) {
     Vehicle.call(this, ...args);
 }
+
+
+//The following won't work since it's a property of Vehicle.prototype and we don't have our own prototype setup to match our inherited parent.
+//monsterTruck.vroom();
+
+//To accomplish that,
+
 Truck.prototype = Object.create(Vehicle.prototype);
+
 //Here monsterTruck is initialized with the drive function  as drive function is  a property of Vehicle.
 //and we can assume all properties available in vehicle are available here.
 var monsterTruck = new Truck("MONSTER", 16, "5000");
 monsterTruck.drive();
 monsterTruck.stop();
 
-//The following won't work since it's a property of Vehicle.prototype and we don't have our own prototype setup to match our inherited parent.
-//monsterTruck.vroom();
-//To accomplish that,
 
-
-//monsterTruck.vroom();
 
 var testTruck = new Truck("normal", 8, "5000");
 testTruck.vroom();
