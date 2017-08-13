@@ -75,3 +75,14 @@ const clonewars = n => [Math.pow(2, n - 1), Array(n).fill(1).map((_, i, arr) => 
 console.log(clonewars(1));
 console.log(clonewars(5));
 console.log(clonewars(10));
+
+
+
+long sum = 0;
+int ctr = 0, kpd = kataPerDay;
+while (kpd != 0) {
+    sum += kpd * Math.pow(2, ctr);
+    ctr++;
+    kpd--;
+}
+System.out.println(sum);
