@@ -77,6 +77,7 @@ console.log(clonewars(5));
 console.log(clonewars(10));
 
 
+const clonewars = n => [Math.pow(2, n - 1), Array(n).fill(1).map((_, i, arr) => Math.pow(2, i) * (arr.length - i)).reduce((a, b) => a + b, 0)]
 
 long sum = 0;
 int ctr = 0, kpd = kataPerDay;
