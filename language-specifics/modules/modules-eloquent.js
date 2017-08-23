@@ -153,19 +153,126 @@ given a module name, will load that module’s file (from disk or the Web,
 depending on the platform we are running on) and return the appropriate
 interface value.
 
-This is similar to how it would be implemented in Node.
 
-The following is a minimal implementation of require :
-function require ( name ) {
-var code = new Function (" exports " , readFile ( name ));
-var exports = {};
-code ( exports ) ;
-return exports ;
-}
-console . log ( require (" weekDay ") . name (1) );
-// → Monday
-
-*/
 
 
 //-------------------------------------------------------------------------
+
+/*
+    Evaluating data as code
+    There are several ways to take data (a string of code) and run it as part
+    of the current program.
+
+    The most obvious way is the special operator eval , which will execute
+    a string of code in the current scope. 
+    
+    This is usually a bad idea because it breaks some of the sane properties that scopes normally have, such as
+    being isolated from the outside world.
+
+*/
+
+// A better way of interpreting data as code is to use the Function constructor. 
+
+//This takes two arguments, a string containing a comma-seperated list of argument names,
+// and a string containing the functions body.
+var multiplyNums = new Function('x,y', "return x * y");
+
+//logs 20
+console.log(multiplyNums(5, 4))
+
+
+//-------------------------------------------------------------------------
+
+
+
+/* The following is a minimal implementation of require :
+
+Lets break it down.
+function require(name) {
+    //We assume we have a readFile function that returns a string to us 
+    //Using a function constructor, we use this string to create our function dynamically
+    //and thus wrap it in it's own namespace.
+    var code = new Function(" exports ", readFile(name));
+    var exports = {};
+    code(exports);
+    return exports;
+}
+
+
+Assuming readFile(name) has a file which contains the following code:
+//Note now we don't need to wrap this function since it is being executed
+//in it's own namespace shown above since, reference of exports object is being passed 
+//to it, we add properties we want to use to that object thus , importing it.
+var names = [" Sunday " , " Monday " , " Tuesday ", " Wednesday ",
+" Thursday " , " Friday ", " Saturday "];
+exports . name = function ( number ) {
+return names [ number ];
+};
+
+exports . number = function ( name ) {
+return names . indexOf ( name ) ;
+};
+
+*/
+
+//-------------------------------------------------------------------------
+
+/* 
+The simplistic implementation of require given previously has several 
+problems. For one, it will load and run a module every time it is require
+d, so if several modules have the same dependency or a require call is
+put inside a function that will be called multiple times, time and energy
+will be wasted.
+
+This can be solved by storing the modules that have already been
+loaded in an object and simply returning the existing value when one is
+loaded multiple times.
+
+The second problem is that it is not possible for a module to directly
+export a value other than the exports object, such as a function. For
+example, a module might want to export only the constructor of the
+object type it defines.
+
+Right now, it cannot do that because require
+always uses the exports object it creates as the exported value.
+
+The traditional solution for this is to provide modules with another
+variable, module , which is an object that has a property exports .
+
+This property initially points at the empty object created by require but can
+be overwritten with another value in order to export something else. */
+
+/* 
+
+function require ( name ) {
+//Checking if our cache has the property name, (name of the module)
+//returning it if it does.
+
+if ( name in require . cache )
+return require . cache [ name ];
+
+//Now we pass two arguments to our Function constructor, module and exports.
+var code = new Function (" exports , module ", readFile ( name ));
+var exports = {} , module = { exports : exports };
+//Executing and setting the references same as above.
+code ( exports , module ) ;
+//IMPORTANT PART:  
+// Using the require.cache property (which is declared below)
+// We add the current module name passed to require as a PROPERTY of the cache object
+// and the value of the property is the module.exports object
+require . cache [ name ] = module . exports ;
+return module . exports ;
+}
+//Creating an object without a prototype
+require . cache = Object . create ( null ); 
+
+We now have a module system that uses a single global variable ( require )
+to allow modules to find and use each other without going through the
+global scope.
+This style of module system is called CommonJS modules, after the
+pseudo-standard that first specified it. It is built into the Node.js sys-
+tem. Real implementations do a lot more than the example
+
+
+
+*/
