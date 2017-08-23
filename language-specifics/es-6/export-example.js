@@ -1,0 +1,1 @@
+module.exports = (x) => Math.pow(x, 3)
