@@ -7,3 +7,14 @@ else if (i % 5 === 0)
     console.log('Buzz')
 else
     console.log(i)
+
+
+//Eloquent solution
+for (let i = 1; i <= 100; i++) {
+    let o = '';
+    if (i % 3 === 0)
+        o += 'Fizz'
+    if (i % 5 === 0)
+        o += 'Buzz'
+    console.log(o || i) //Empty string is a falsy value Short circuiting of logical operators.
+}
