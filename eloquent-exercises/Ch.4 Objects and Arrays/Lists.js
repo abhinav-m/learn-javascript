@@ -32,7 +32,7 @@ function prepend(list, v) {
 function nth(list, n) {
     if (!list)
         return undefined;
-    else if (n - 1 === 0)
+    else if (n - 1 === 0) //base case nth element reached.
         return list.value;
     else {
         console.log(list.value)

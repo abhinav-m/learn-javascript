@@ -1,15 +1,28 @@
 function deepEqual(a, b) {
-    if (typeof(a) === 'object' && typeof(b) === 'object') {
-        for (var prop in a) {
-            if (typeof(a[prop]) === 'object' && typeof(b[prop]) === 'object')
-                deepEqual(a[prop], b[prop])
-            else if (a[prop] !== b[prop])
-                return false;
-        }
-        return true;
-    } else {
-        return a === b
+    //Base case, if a == b , return true
+    if (a === b)
+        return true; //One of a or b is not an object, return false.
+
+    if (a === null || b === null || typeof(a) != 'object' || typeof(b) != 'object') {
+        return false;
     }
+
+    //Count props in both objects..
+    var propsInA = 0,
+        propsInB = 0;
+
+    for (var prop in a) {
+        propsInA++;
+    }
+
+    for (var prop in b) {
+        propsInB++; //if prop doesnt exist in a , and exists in b, return false or, recursive case returns false.
+        if (!(prop in a) || !deepEqual(a[prop], b[prop]))
+            return false;
+    }
+    //both have equal number of props, nothing returned false, therefore if props are equal in number, they are same objects.
+    return propsInA === propsInB;
+
 }
 
 
