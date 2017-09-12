@@ -6,6 +6,7 @@ $(document).ready(function() {
     globalVar = "globalScope";
     console.log("currently global scope");
     differentScope();
+    //Will print true because hold the same reference.
     var object1 = { a: 1, b: 2, c: 3 };
     var object2 = object1;
     console.log(object1 == object2);
@@ -19,10 +20,12 @@ $(document).ready(function() {
     console.log(divByThree(9));
     //CLOSURE IIFE example
     //This returns incorrectly bounded function to current reference of i
-    var exampleObjects = [{ prop: 10 }, { prop: 5 }, { prop: 6 }];
+    var exampleObjects = [{ prop: 3 }, { prop: 5 }, { prop: 6 }];
     var setProps = closureWrongWay(exampleObjects);
     var firstProp = setProps[0];
-    console.log("Should be 13 " + firstProp.prop());
+    var secondProp = setProps[1];
+    console.log("Should be 11, but due to wrong closure prints 13. " + firstProp.prop());
+    console.log("Should be 12,but due to wrong closure prints 13 " + secondProp.prop());
     var myPrivProp = closurePrivatePropExample();
     //This corrects above problem , and assigns the actual value on each loop iteration by 
     //invoking the function immediately using   Immediately Invoked Function Expression (IIFE)
@@ -31,9 +34,9 @@ $(document).ready(function() {
     var secondProp = setProps[1];
     var thirProp = setProps[2];
 
-    console.log("Should be 10" + firstProp.prop);
-    console.log("Should be 11" + secondProp.prop);
-    console.log("Should be 12" + thirProp.prop);
+    console.log("Should be 10 " + firstProp.prop); //note how we are not calling the function here , it's already called with frozen value of i.
+    console.log("Should be 11 " + secondProp.prop);
+    console.log("Should be 12 " + thirProp.prop);
 
     //Example on making properties private using closure. 	
     //Should reference inner property value
@@ -76,6 +79,7 @@ function differentScope() {
 
 function testGlobal() {
     console.log(" global variable's value.Proof: " + globalVar);
+
     //This will throw reference error as variables declared with let are TDZ The temporal dead zone is not a syntactic location, but rather the time between the variable (scope) creation and the initialisation.  and not initialised. 
     //let globalVar = "makinitLocal";
 }
@@ -85,21 +89,21 @@ function optionalArguments(a, b, c) {
     //Should print 6
     //If provided with less arguments, one variable will get value undefined, printed value will be NaN.
     //We can use optional arguments as, this gives a "default argument" makes function flexible.
-    if (c == undefined)
+    if (c === undefined)
         c = 0;
 
     console.log(a + b + c);
 
 }
 
-
+//Exponentiation example. (squares without value of b, else exponentiates to the value of b provided.)
 function optionalArgumentsExp(a, b) {
-    if (b == undefined)
+    if (b === undefined)
         b = 2;
     var res = 1;
     for (var count = 0; count < b; count++)
         res = res * a;
-    console.log("Prints square if provided with no argument, otherwise can be exponentiated as neede" + res);
+    console.log("Prints square if provided with no argument, otherwise can be exponentiated as needed " + res);
 }
 
 
@@ -138,12 +142,13 @@ function closurePrivatePropExample() {
 
 
 function closureWrongWay(objects) {
-    var i;
+
     var myNum = 10;
     //Each object's property is being assigned myNum+i
     //However since the function will be called when the closure get's initialized and used, this will return wrong value.
     //Value of i will be 3 (last value in loop as loop gets executed in outer function call.) when this function is actually used.
-    for (i = 0; i < objects.length; i++)
+    //Can be fixed in two ways, IIFE as shown below, or by using let keyword for variable i.
+    for (var i = 0; i < objects.length; i++)
         objects[i]["prop"] = function() {
             return myNum + i;
         }
