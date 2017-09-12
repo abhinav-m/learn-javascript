@@ -359,17 +359,17 @@ console.log(ex.subtractOne);
 function Vehicle(type, wheels, hp) {
     this.wheels = wheels;
     this.hp = hp;
+    this.type = type;
 
     this.drive = () => console.log(type + " which has " + wheels + " wheels and " + hp + " horsepower drives off");
     this.stop = () => console.log(type + " which has " + wheels + " wheels and " + hp + " horsepower comes to a stop.")
 
-    Vehicle.prototype.vroom = function() {
-        console.log(type + " vrooms");
-    }
-    Vehicle.prototype.vroom = Vehicle.prototype.vroom.bind(this);
+
 
 }
-
+Vehicle.prototype.vroom = function() {
+    console.log(this.type + " vrooms");
+}
 
 var myCar = new Vehicle("car", 4, "500");
 myCar.drive();
@@ -392,6 +392,7 @@ Truck.prototype = Object.create(Vehicle.prototype);
 var monsterTruck = new Truck("MONSTER", 16, "5000");
 monsterTruck.drive();
 monsterTruck.stop();
+monsterTruck.vroom();
 
 
 

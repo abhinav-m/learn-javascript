@@ -74,6 +74,6 @@ function unless(test, then) {
 }
 //Example 2: Executes a loop a required number of times.
 function repeat(times, body) {
-    for (var i = 0; i < 3; i++)
+    for (var i = 0; i < times; i++)
         body();
 }
