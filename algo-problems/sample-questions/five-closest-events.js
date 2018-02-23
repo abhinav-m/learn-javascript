@@ -1,5 +1,5 @@
-//Sample coordinate.
-main(-2,5);
+
+main();
 
 //Function to compute value within a random range.
 function getRandomIntInclusive(min, max) {
@@ -77,15 +77,16 @@ return distances;
 }
 
 
-function main(x,y) {
+function main() {
   //Populate world with 20 events.
 let events = populateWorld(20);
 
-let distances = getNearestEvents(x,y,events);
-console.log('5 closes events are:');
+  let distances = getNearestEvents(4,3,events);
+  console.log('5 closes events are:');
 
-for(let i = 0;i<5;i++) {
-console.log("Event:"+ distances[i].eventNum+' Distance: '+distances[i].distance+' Coordinates: ['+distances[i].coords[0]+','+distances[i].coords[1]+'] Cheapest ticket:'+distances[i].minTicket);
-}
+  for(let i = 0;i<5;i++) {
+  console.log("Event:"+ distances[i].eventNum+' Distance: '+distances[i].distance+' Coordinates: ['+distances[i].coords[0]+','+distances[i].coords[1]+'] Cheapest ticket:'+distances[i].minTicket);
+  }
+
 
 }
