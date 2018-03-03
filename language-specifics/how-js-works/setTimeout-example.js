@@ -1,5 +1,5 @@
 /* FML.
-This will print 11000 
+This will print 11000
 as the for loop executes almost immediately, 
 and i refers to the last value in the loop.
 
