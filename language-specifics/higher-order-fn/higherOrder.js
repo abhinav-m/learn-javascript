@@ -1,10 +1,13 @@
 $(document).ready(function() {
     var myArray = [1, 2, 3, 4, 5];
     //Basic example, similar to foreach
+    console.log('---forEach example');
     forEach(myArray, function(number) {
         number += 2;
+	console.log(number);
     });
     //Similar forEach example
+    console.log('---logEach example');
     logEach(myArray);
     //Functions creating new functions
     //Abstracting over ACTIONS, not values.
