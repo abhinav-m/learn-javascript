@@ -18,4 +18,5 @@ var addAndMultiply = function() {
 	return result;
 }
 
-console.log(addAndMultiply())
+//logs 45, result is local to the function addAndMultiply.
+console.log(addAndMultiply());

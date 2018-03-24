@@ -7,5 +7,7 @@ result *= base ;
 return result ;
 }
 
+//Logs 16
 console.log(power(4));
+//Logs 8
 console.log(power(2,3));
