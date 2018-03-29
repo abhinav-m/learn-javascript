@@ -1,11 +1,11 @@
-/* Methods are simply properties that hold function values. 
+/* Methods are simply properties that hold function values.
    This is a simple method : */
 
 var fox = {};
 
 //Here this will refer to the fox object.
 fox.speak = function(line) {
-    console.log("The fox says " + line + "!");
+  console.log("The fox says " + line + "!");
 }
 
 fox.speak(" I like fishes. ");
@@ -18,16 +18,22 @@ body will point to the object that it was called on. */
 
 //----------------------------------------------------------------------------
 
-//Above code can be refactored to produce a better version , 
+//Above code can be refactored to produce a better version ,
 //which can be used on more than one object.
 
 function speak(line) {
-    console.log("I am a " + this.type + " and I wanna say " + line);
+  console.log("I am a " + this.type + " and I wanna say " + line);
 
 }
 
-var rabbit = { type: "rabbit", speak: speak };
-var billi = { type: "billi", speak: speak };
+var rabbit = {
+  type: "rabbit",
+  speak: speak
+};
+var billi = {
+  type: "billi",
+  speak: speak
+};
 
 //Here the this keyword allows us to get the output we desire by referencing this.type
 rabbit.speak("rabbit stuff");
@@ -40,12 +46,16 @@ billi.speak("billi stuff");
   and simulate them as methods*/
 
 // Apply needs it's arguments as an array. Example
-var cat = { type: "cat" };
+var cat = {
+  type: "cat"
+};
 speak.apply(cat, ["meow"]);
 
 //Call can take arguments normally.
 //Here we pass the this object as a parameter to the function.
-speak.call({ type: "bat" }, "I'm batman");
+speak.call({
+  type: "bat"
+}, "I'm batman");
 
 //----------------------------------------------------------------------------
 
@@ -58,7 +68,7 @@ console.log(empty.toString());
 
 
 
-/*In addition to their properties, all objects contain prototype property. 
+/*In addition to their properties, all objects contain prototype property.
     A prototype is another object that is used as a fallback source of properties.
     When an object gets a request for a property that it does not have, its prototype will be
     searched for the property, then the prototype’s prototype, and so on.
@@ -69,9 +79,9 @@ console.log(empty.toString());
 console.log(Object.getPrototypeOf({}) === Object.prototype);
 //This will return NULL as there is nothing upwards the prototype chain of Object.
 console.log(Object.getPrototypeOf(Object.prototype))
-    ///A thing to note here:
-    //  This will return Object.prototype property(a function) since Object is the base entity,
-    //  and has it's own prototype property.
+///A thing to note here:
+//  This will return Object.prototype property(a function) since Object is the base entity,
+//  and has it's own prototype property.
 console.log(Object.getPrototypeOf(Object))
 
 /*
@@ -103,9 +113,9 @@ console.log(Object.getPrototypeOf(Function.prototype) === Object.prototype);
 //Object.create can be used to create an object with a specific prototype.
 
 var animalPrototype = {
-    say: function(what) {
-        console.log(this.type + " says " + what);
-    }
+  say: function(what) {
+    console.log(this.type + " says " + what);
+  }
 }
 
 //This will create an object with it's prototype property set as the given object.
@@ -128,12 +138,12 @@ the new keyword in front of it causes it to be treated as a constructor.
 
 The constructor will have its this variable bound to a fresh object, and
 unless it explicitly returns another object value, this new object will be
-returned from the call. 
+returned from the call.
 
 An object created with new is said to be an instance of its constructor.*/
 
 function Animal(type) {
-    this.type = type;
+  this.type = type;
 }
 
 var horse = new Animal("Black horse");
@@ -142,7 +152,7 @@ var dog = new Animal("Labrador dog");
 console.log(horse.type);
 console.log(dog.type);
 
-/* Constructors, and in fact all functions automatically get a property named prototype 
+/* Constructors, and in fact all functions automatically get a property named prototype
 which by default holds an empty and plain object
 This object is derived from Object.prototype and every instance created of this object
 from it's constructor function will have it as it's prototype */
@@ -151,7 +161,7 @@ from it's constructor function will have it as it's prototype */
 console.log(Animal.prototype)
 
 Animal.prototype.says = function(words) {
-    console.log(this.type + " says " + words);
+  console.log(this.type + " says " + words);
 }
 
 //Both dog and horse are created from Animal constructor and can access says property through their prototype
@@ -159,7 +169,7 @@ dog.says("woof");
 horse.says("Nehehehe");
 
 /* It is important to note how a constructor function has it's OWN prototype property. (as shown above)
-and how objects prototype can be determined using Object.getPrototypeOf() 
+and how objects prototype can be determined using Object.getPrototypeOf()
 The constructor's function prototype will be: Function.prototype since constructors are functions.
 It's prototype value will be the prototype of instances created through it BUT NOT ITS OWN PROTOTYPE.*/
 
@@ -173,13 +183,13 @@ name in the prototype, this property will no longer affect the object. The
 prototype itself is not changed. This is also known as shadowing. */
 
 function Car(model) {
-    this.drive = function() {
-        console.log(this.model + " starts")
-    }
+  this.drive = function() {
+    console.log(this.model + " starts")
+  }
 
-    this.description = function() {
-        console.log("Model " + model + " has " + this.wheels + " wheels");
-    }
+  this.description = function() {
+    console.log("Model " + model + " has " + this.wheels + " wheels");
+  }
 }
 //Lets assign Car.prototype.wheels as 3
 Car.prototype.wheels = 3;
@@ -196,7 +206,7 @@ mercedes.wheels = 4;
 //Prints overridden property
 mercedes.description();
 
-//Another example of the same feature is calling toString() on an array , 
+//Another example of the same feature is calling toString() on an array ,
 //this function is shadowed / overriden in Array.prototype.toString
 //Hence it prints array elements seperated by commas.
 console.log([1, 2, 3, 4, 5].toString());
@@ -212,14 +222,14 @@ and the name of the type between square brackets.*/
 
 //----------------------------------------------------------------------------
 
-/*Prototype interference 
+/*Prototype interference
 A prototype may be used to add new properties and methods to all objects based on an object.
 Although this is convenient, there are situations that it causes problems:*/
 
 var pizza = {}
 
 function addProperties(prop, name) {
-    pizza[prop] = name;
+  pizza[prop] = name;
 }
 
 addProperties("crust", "thin");
@@ -230,7 +240,7 @@ addProperties("type", "margherita");
 Object.prototype.awful = "pineapple";
 
 for (var desc in pizza)
-    console.log(desc);
+  console.log(desc);
 
 //These return true as these properties can be found using the base object prototype
 //But these are not available directly in our object. This can be a problem.
@@ -249,18 +259,21 @@ delete Object.prototype.awful;
 It is possible to define our own nonenumerable properties by using
 the Object.defineProperty function, which allows us to control the type of
 property we are creating. */
-Object.defineProperty(Object.prototype, "hiddenawful", { enumerable: false, value: "pineapple" });
+Object.defineProperty(Object.prototype, "hiddenawful", {
+  enumerable: false,
+  value: "pineapple"
+});
 
 //Now it won't be enumerated over via this loop.
 for (var desc in pizza)
-    console.log(desc)
+  console.log(desc)
 
 //This will still return true
 console.log("hiddenawful" in pizza)
-    //We still face the issue of the property returning "true" in case of using `in`
-    //To solve this issue we can use the object's hasOwnProperty() method.
-    //This tells us if the object itself has this property , without looking at its prototypes.
-    //Often more useful than the `in` operator.
+//We still face the issue of the property returning "true" in case of using `in`
+//To solve this issue we can use the object's hasOwnProperty() method.
+//This tells us if the object itself has this property , without looking at its prototypes.
+//Often more useful than the `in` operator.
 console.log(pizza.hasOwnProperty("toString"));
 //returns false
 
@@ -268,14 +281,14 @@ console.log(pizza.hasOwnProperty("toString"));
     we can write for/ in loops as:
     */
 for (var name in pizza) {
-    if (pizza.hasOwnProperty(name))
-        console.log("pizza owns " + name);
+  if (pizza.hasOwnProperty(name))
+    console.log("pizza owns " + name);
 }
 
 //However there is another concern here that needs to be handled.
 //What if hasOwnProperty() ITSELF is defined on our object and it's value tampered with?
-//We can create a prototype - less object to handle this using Object.create() 
-//Remember, Object.create creates an object for us with a specific passed prototype, passing null to it 
+//We can create a prototype - less object to handle this using Object.create()
+//Remember, Object.create creates an object for us with a specific passed prototype, passing null to it
 //would cause it's prototype to be null (pizza.prototype) Thus, no matter what tampering is done with Object.prototype
 //It wouldn't affect our object. Also, for in loops can be used as all properties would belong to the object itself
 //without hasOwnProperty() sludge.
@@ -296,9 +309,9 @@ console.log("toppings" in myPizza);
     When the toString function is called on an object, it calls toString on the object to try and create
     a meaningful string to return.
     Some of the standard prototypes eg, Array.protoype , Function.prototype define their own versions of the toString method
-    to create a method which returns more useful information than "[Object object]". 
+    to create a method which returns more useful information than "[Object object]".
     This simple instance is an example of a powerful idea.
-    When a piece of code is written to work with objects of a certain interface eg, toString method any kind of object 
+    When a piece of code is written to work with objects of a certain interface eg, toString method any kind of object
     can be `plugged` in to use this interface, and it will work.
     Polymorphic code can work with values of different types, as long as they support the interface it expects */
 
@@ -307,40 +320,48 @@ console.log("toppings" in myPizza);
 /* Getters and setters:
     Non method properties shouldn't be used in interfaces as a principle.
     Rather than directly accessing a simple value property, getSomething and setSomething methods can be used to read and write the property.
-    This approach has the downside of having to end up writing and reading , a lot of additional methods. 
+    This approach has the downside of having to end up writing and reading , a lot of additional methods.
     In javascript a technique is provided for this purpose. We can specify properties, that from outside look like normal properties,
     but secretly have methods associated with them. */
 
 var garbage = {
-    content: ["eggshell", "wrappers", "chewinggum", "worms"],
-    get height() {
-        return this.content.length;
-    },
-    set height(value) {
-        console.log("Im a rebel, i wont set height as " + value + " for you");
-    }
+  content: ["eggshell", "wrappers", "chewinggum", "worms"],
+  get height() {
+    return this.content.length;
+  },
+  set height(value) {
+    console.log("Im a rebel, i wont set height as " + value + " for you");
+  }
 }
 
 console.log(garbage.height); //Read attempt on height property, where getter and setter's are defined will return 4
 garbage.height = 200; //This will run the set method, and ignore the attempt to set the value directly.
 
 /*  In an object literal, the get or set notation for properties allows you
-to specify a function to be run when the property is read or written. 
+to specify a function to be run when the property is read or written.
 
 You can also add such a property to an existing object, for example a
 prototype, using the Object.defineProperty function (which we previously
 used to create nonenumerable properties). eg: */
 
 //We cant assign it directly to garbage.prototype as garbage isn't created with new keyword.
-Object.defineProperty(Object.prototype, "lastGarbage", { get: function() { return this.content[this.content.length - 1]; } });
+Object.defineProperty(Object.prototype, "lastGarbage", {
+  get: function() {
+    return this.content[this.content.length - 1];
+  }
+});
 
 
 function Example(value) {
-    this.value = value;
+  this.value = value;
 }
 var ex = new Example(5);
 //Here we assign it to Example.prototype and access it using subtractOne
-Object.defineProperty(Example.prototype, "subtractOne", { get: function() { return this.value - 1 } });
+Object.defineProperty(Example.prototype, "subtractOne", {
+  get: function() {
+    return this.value - 1
+  }
+});
 //Last value in the array
 console.log(garbage.lastGarbage);
 //Current value minus one
@@ -350,25 +371,25 @@ console.log(ex.subtractOne);
 
 /* Inheritance in JS:
     We can use similar objects constructors through call method available to us in javascript global object to create a new object.
-    This pattern is called inheritance. It allows us to build slightly different data types from existing data types with relatively little work. 
+    This pattern is called inheritance. It allows us to build slightly different data types from existing data types with relatively little work.
     Typically,the new constructor will call the old constructor (using the call method in order to be able to give  the new object as its this value). Once
-    this constructor has been called, we can assume that all the fields that the old object type is supposed to contain have been added. We arrange 
+    this constructor has been called, we can assume that all the fields that the old object type is supposed to contain have been added. We arrange
     for the constructor’s prototype to derive from the old prototype so that instances of this type will also have access to the properties in that
     prototype. Finally, we can override some of these properties by adding them to our new prototype. Example: */
 
 function Vehicle(type, wheels, hp) {
-    this.wheels = wheels;
-    this.hp = hp;
-    this.type = type;
+  this.wheels = wheels;
+  this.hp = hp;
+  this.type = type;
 
-    this.drive = () => console.log(type + " which has " + wheels + " wheels and " + hp + " horsepower drives off");
-    this.stop = () => console.log(type + " which has " + wheels + " wheels and " + hp + " horsepower comes to a stop.")
+  this.drive = () => console.log(type + " which has " + wheels + " wheels and " + hp + " horsepower drives off");
+  this.stop = () => console.log(type + " which has " + wheels + " wheels and " + hp + " horsepower comes to a stop.")
 
 
 
 }
 Vehicle.prototype.vroom = function() {
-    console.log(this.type + " vrooms");
+  console.log(this.type + " vrooms");
 }
 
 var myCar = new Vehicle("car", 4, "500");
@@ -376,7 +397,7 @@ myCar.drive();
 myCar.vroom();
 
 function Truck(...args) {
-    Vehicle.call(this, ...args);
+  Vehicle.call(this, ...args);
 }
 
 
@@ -412,7 +433,7 @@ together, creating more tangle. */
 
 //----------------------------------------------------------------------------
 
-/*InstanceOf operator 
+/*InstanceOf operator
 It is occasionally useful to know whether an object was derived from
 a specific constructor. For this, JavaScript provides a binary operator
 called instanceof .
@@ -421,7 +442,7 @@ called instanceof .
 console.log(new Truck("1", 2, "3") instanceof Truck); //true
 
 //This looks through inherited types. Truck is an instance of  vehicle
-//because Truck.prototype derives from Vehicle.prototype. 
+//because Truck.prototype derives from Vehicle.prototype.
 //This operator can also be applied to standard constructors like arrays.
 //Almost every object is an instance of Object.
 console.log(new Truck("1", 2, "3") instanceof Vehicle); //true
@@ -430,14 +451,14 @@ console.log(new Vehicle("1", 2, "3") instanceof Truck); //false
 
 
 function Base(a, b) {
-    this.a = a;
-    this.b = b;
+  this.a = a;
+  this.b = b;
 }
 
 Base.prototype.c = "test";
 
 function Derived(...args) {
-    Base.call(...args);
+  Base.call(...args);
 }
 
 //Without setting Derived.prototype object as Base's prototype object, instanceOf returns false:
@@ -451,7 +472,7 @@ console.log(new Derived(1, 2) instanceof Base);
 //----------------------------------------------------------------------------
 /*
 Summary
-So objects are a bit complicated. 
+So objects are a bit complicated.
 
 They have prototypes, which are other objects, and will act as if they have
 properties they don’t have as long as the prototype has that property.
