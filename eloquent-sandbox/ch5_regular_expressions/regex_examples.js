@@ -113,3 +113,82 @@ console.log(/\bcat\b/.test('con cat-enate'));
 // - true
 console.log(/\bcat\b/.test('con.catenate'));
 // - false
+
+/* The pipe character ( | ) denotes a choice between the pattern to its
+left and the pattern to its right. */
+
+let testDate = /\b\d+ (Jan|\d{1,2}|Feb)s?\b/;
+
+console.log(testDate.test('14 25s'));
+// → true
+
+let animalCount = /\b\d+ (pig|cow|chicken)s?\b/;
+console.log(animalCount.test('15 pigs'));
+//149; // → true
+console.log(animalCount.test('15 pigchickens'));
+// → false
+
+//Pattern which matches a binary number followed by b
+// or a decimal number, or a hex number.
+console.log(/\b([01]+b|[\da-f]+h|\d+)\b/.test('105252'));
+
+//Replace method which replaces bc with ef in string.
+console.log('abcbcbcd'.replace(/bc/, 'ef'));
+
+//If 'g' is added, all values of 'bc' are replaced.
+console.log('abcbcbcd'.replace(/bc/, 'ef'));
+
+//Replacing firstname and lastname in a name string
+//Matches with parenthesis are accessed with $1 $2 ... $9 Whole match can be referred to  as $&
+console.log('Abhinav, Mishra'.replace(/(\w+), (\w+)/, '$2-$1'));
+
+//Replacement can be done using functions as well.
+//first argument is the string, convert it to uppercase.
+console.log(
+  'cid is better than fbi'.replace(/\b(cid|fbi)\b/g, str => str.toUpperCase())
+);
+
+let stock = '1 lemon 10 cabbages and 101 eggs';
+
+//The first value is the whole match, amount is the first parenthesis argument.
+//unit is the second parenthesis argument.
+function decreaseStock(match, amount, unit) {
+  amount -= 1;
+
+  if (amount === 0) {
+    amount = 'No';
+  } else if (amount === 1) {
+    //Remove plural 's' from string.
+    unit = unit.slice(0, unit.length - 1);
+  }
+  return amount + ' ' + unit;
+}
+
+//g is important to replace all matches.
+console.log(stock.replace(/(\d+) (\w+)/g, decreaseStock));
+
+function stripComments(code) {
+  //Regex to remove comments in code.
+  return code.replace(/\/\/.*|\/\*[^]*\*\//g, '');
+  /*
+  /\/\ -> Two escaped backslashes \\
+  '.' -> Any character except line break(newline \n character)
+  '*' -> all characters.
+  '|' -> Or statement
+   \/\* -> Escaped backslash and * 
+   [^]* -> Any character(s) not in the empty set of character ^ is not [] is set of characters. * represents many.
+   \*\/ Escaped * with an escaped \ character -> *\ matching end of the block comment.
+  
+  Matches // comments with anything in front of them
+  */
+}
+console.log(stripComments('x= 10; //ten!'));
+
+//This fails because [^*] is a greedy matcher,it will go to the end of the string and backtrack from there
+//Which will lead to the 2nd */ being encountered, and treated as the end of the regex.
+console.log(stripComments('1 /* a */+/* b */ 1'));
+
+/* If you put a question mark after them ( +? , *? , ?? , {}? ), they become
+nongreedy and start by matching as little as possible, matching more only when
+the remaining pattern does not fit the smaller match. */
+console.log('1 /* a */+/* b */ 1'.replace(/\/\/.*|\/\*[^]*?\*\//g, ''));
