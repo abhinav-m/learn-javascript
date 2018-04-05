@@ -192,3 +192,25 @@ console.log(stripComments('1 /* a */+/* b */ 1'));
 nongreedy and start by matching as little as possible, matching more only when
 the remaining pattern does not fit the smaller match. */
 console.log('1 /* a */+/* b */ 1'.replace(/\/\/.*|\/\*[^]*?\*\//g, ''));
+
+let name_1 = 'harry';
+let text_1 = 'Harry is a suspicious character.';
+//While creating RegExp objects, we need to escape \ characters in string literals.
+//Options are passed as the second argument(gi)
+let regexp_1 = new RegExp('\\b(' + name_1 + ')\\b', 'gi');
+console.log(text_1.replace(regexp_1, '$1 Potter'));
+// → Harry Potter is a suspicious character.
+
+let name = 'dea+hl[]rd';
+let text = 'This dea+hl[]rd guy is super annoying.';
+//Example of regex to replace any matching special characters with escaped character.
+let escaped = name.replace(/[\\[.+*?(){|^$]/g, '\\$&');
+console.log(escaped);
+let regexp = new RegExp('\\b' + escaped + '\\b', 'gi');
+console.log(text.replace(regexp, '_$&_'));
+// → This _dea+hl[]rd_ guy is super annoying.
+
+//The following logs 3 , no way to specify offset to start search from
+//a particular index (like in indexof but indexof cant be called with a regular expression  )
+console.log('wor d'.search(/\s/));
+//logs -> 3 ,
