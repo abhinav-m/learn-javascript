@@ -214,3 +214,33 @@ console.log(text.replace(regexp, '_$&_'));
 //a particular index (like in indexof but indexof cant be called with a regular expression  )
 console.log('wor d'.search(/\s/));
 //logs -> 3 ,
+
+/* Regular expression objects have properties. One such property is source ,
+which contains the string that expression was created from. Another property
+is lastIndex , which controls, in some limited circumstances, where the next
+match will start.
+Those circumstances are that the regular expression must have the global
+( g ) or sticky ( y ) option enabled, and the match must happen through the exec
+method. */
+
+let pattern = /n/g;
+pattern.lastIndex = 3;
+
+let matchPattern = pattern.exec('hyena');
+//logs -> 3
+console.log(matchPattern.index);
+// logs ->  (after the pattern index)
+console.log(pattern.lastIndex);
+
+let pattern_2 = /x/g;
+/* 
+If the match was successful, the call to exec automatically updates the
+lastIndex property to point after the match. If no match was found, lastIndex
+is set back to zero, which is also the value it has in a newly constructed regular
+expression object.
+*/
+//This wont match.
+let matchPattern_2 = pattern.exec('hyena');
+
+//the regex object.lastIndex will be reset to 0.
+console.log(pattern_2.lastIndex);
