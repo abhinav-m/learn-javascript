@@ -17,22 +17,28 @@ smaller.
 */
 
 //car and cat
-let pattern_1 = /car|t/
+let pattern_1 = /car|t/;
+//can also be /ca[rt]/
 
 console.log(pattern_1.test('catandcar'));
 
 //pop and prop
-let pattern_2 = /pr?op/
+let pattern_2 = /pr?op/;
 
-let cases = ["he pop", "prop in react", "hip hop", "k pop"]
+let cases = ['he pop', 'prop in react', 'hip hop', 'k pop'];
 
 verify(pattern_2, cases);
 
+let pattern_3 = /ferr(et|y|ari)/;
 
+verify(pattern_3, ['ferrari', 'ferry', 'ferret', 'ferrero']);
 
+let pattern_4 = /[a-z]ious/;
+
+verify(pattern_4, ['spacious ', 'luxurious', 'typhus']);
+//Eloquent solution -> /ious\b/
 function verify(pattern, cases) {
-    for (let str of cases) {
-
-        console.log(`The pattern matched -> ${pattern.test(str)}`)
-    }
+  for (let str of cases) {
+    console.log(`The pattern matched -> ${pattern.test(str)}`);
+  }
 }
