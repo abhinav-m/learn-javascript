@@ -5,6 +5,6 @@ the exponent. Also note that it is not necessary for there to be digits in front
 of or after the dot, but the number cannot be a dot alone. That is, .5 and 5.
 are valid JavaScript numbers, but a lone dot isn’t. */
 
-let pattern = /(\+|\-)?\d/g;
+let pattern = /^(\+|\-)?(\d+)\.?(\d+)?$/;
 let tests = ['0.05', '-99', '-23.5', '222.3.22'];
 tests.forEach(v => console.log(pattern.test(v)));
