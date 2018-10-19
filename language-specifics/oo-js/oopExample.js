@@ -111,7 +111,7 @@ $(document).ready(function() {
 
     //This property should be available to all built from Person() constrcutor, through the ProtoType object.
     Person.prototype.nextYear = function() {
-            console.log(this.name + " will be " + this.age + 1 + " years old next year");
+            console.log(this.name + " will be " + parseInt(this.age,10) + 1 + " years old next year");
         }
         //Test This proves that the browser moves upwards in the prototype chain to find
         //This proves what we said earlier about the prototype chain, and the browser looking upwards in the chain
