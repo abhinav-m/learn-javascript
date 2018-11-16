@@ -49,3 +49,42 @@ while(!fibonacciResult.done){
     console.log(fibonacciResult);
     fibonacciResult = fibonacciGenerator.next();
 }
+
+//Advanced generators:
+/* 
+The next method returned by a generator 
+can also accept a value which can be used to modify the 
+internal state of the generator function.
+
+A value passed to next() will be treated as
+the result of the LAST YIELD expression that paused the generator.
+
+*/
+
+function* fibonacciRestartingGenerator() {
+    let current = 0, next = 1;
+    while(true) {
+        let reset = yield current;
+        let temp = current;
+        current  = next
+        next = next + temp;
+        if(reset) {
+            current = 0;
+            next = 1;
+        }
+    }
+}
+
+let fiboRestartingIterator = fibonacciRestartingGenerator();
+console.log("** Starting restarting generator **")
+console.log(fiboRestartingIterator.next())
+console.log(fiboRestartingIterator.next())
+console.log(fiboRestartingIterator.next())
+console.log(fiboRestartingIterator.next())
+console.log("** Resetting state of generator **")
+//Here after the generator is resumed from yielding the last 
+//value ie,2 it resets its state by the value passed to it true.
+console.log(fiboRestartingIterator.next(true))
+console.log(fiboRestartingIterator.next())
+console.log(fiboRestartingIterator.next())
+console.log(fiboRestartingIterator.next())
