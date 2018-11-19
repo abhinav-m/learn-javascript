@@ -88,3 +88,56 @@ console.log(fiboRestartingIterator.next(true))
 console.log(fiboRestartingIterator.next())
 console.log(fiboRestartingIterator.next())
 console.log(fiboRestartingIterator.next())
+
+
+/* 
+Generators have a throw method.
+*/
+
+function* gen() {
+    let i = 0;
+    while(true) {
+        try {
+        yield i;
+        i++;
+        }
+        catch(e) {
+            console.log("Error caught")
+        }
+    }
+}
+
+let g =  gen();
+console.log("** Starting error generator **")
+console.log(g.next());
+//The thrown error will be caught inside the suspended context of the generator
+g.throw(new Error("Something went wrong"))    
+console.log("**State of generator after catching error**")
+console.log(g.next())
+
+/* 
+Generators have a return method.
+*/
+
+function* genReturn(){
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+let gReturn = genReturn();
+console.log("**Initial values of generator**")
+console.log(gReturn.next());
+console.log(gReturn.next());
+/* 
+ Return method gives the return value and finishes the generator.
+
+ If return(value) is called on a generator
+ that is already in "completed" state, the generator 
+ will remain in "completed" state. 
+ If no argument is provided, 
+ the return object is the same as if .next().
+ If an argument is provided, it will be set to 
+ the value of the value property of the returned object.
+*/
+console.log(gReturn.return(1));
