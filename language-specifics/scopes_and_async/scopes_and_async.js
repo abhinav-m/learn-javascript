@@ -82,22 +82,22 @@
 
 //Using an anonymous function for IIFE , arrow function inside.
 // Same result due to the closure being formed by the IIFE
-for (var j = 1; j <= 5; j++) {
-  (function(j) {
-    setTimeout(() => {
-      console.log(j);
-    }, j * 1000);
-  })(j);
-}
+// for (var j = 1; j <= 5; j++) {
+//   (function(j) {
+//     setTimeout(() => {
+//       console.log(j);
+//     }, j * 1000);
+//   })(j);
+// }
 
-// //Using an arrow function for IIFE, and arrow function inside.
+//Using an arrow function for IIFE, and arrow function inside.
 // for (var j = 1; j <= 5; j++) {
 //   (j => {
 //     setTimeout(() => {
 //       console.log(j);
 //     }, j * 1000);
 //   })(j);
-//}
+// }
 
 /* Case 5:
    Using an async function and await with promises 
@@ -110,6 +110,8 @@ for (var j = 1; j <= 5; j++) {
 // Note here we dont have to multiply
 // 1000 by i  as each promise is waited upon
 // to be fulfilled due to async /await (generators)
+// The value printed is thus due to the closure being
+// formed
 // function simulateAsync(i) {
 //   return new Promise((resolve, reject) => {
 //     setTimeout(() => {
