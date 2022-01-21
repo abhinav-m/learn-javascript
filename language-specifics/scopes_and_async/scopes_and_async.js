@@ -18,6 +18,9 @@
     with the reference of var variable
     'j' j will have reference to it's 
     last value when loop exits ie,6
+    Also, this code will be executed on stack
+    while setTimeout will be queued in event 
+    loop.
 */
 // for (var j = 1; j <= 5; j++) {
 //   setTimeout(function() {
@@ -100,19 +103,19 @@
 // Note here we dont have to multiply
 // 1000 by i  as each promise is waited upon
 // to be fulfilled due to async /await (generators)
-function simulateAsync(i) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(i);
-    }, 1000);
-  });
-}
-//Each value is awaited and runs after 1 second.
-async function loop() {
-  for (var i = 1; i <= 5; i++) {
-    let returned = await simulateAsync(i);
-    console.log(returned);
-  }
-}
+// function simulateAsync(i) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(i);
+//     }, 1000);
+//   });
+// }
+// //Each value is awaited and runs after 1 second.
+// async function loop() {
+//   for (var i = 1; i <= 5; i++) {
+//     let returned = await simulateAsync(i);
+//     console.log(returned);
+//   }
+// }
 
-loop();
+// loop();
