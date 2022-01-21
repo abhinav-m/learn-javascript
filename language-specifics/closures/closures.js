@@ -28,7 +28,8 @@
     Here instead of executing the function
     we return the inner function. The inner
     function,in javascript will still have access
-    to the lexical environment, thus executes successfully
+    to the lexical environment after being returned
+    , thus executes successfully
 
 */
 
@@ -51,3 +52,30 @@
 // // Execute and see variable is still printed
 // // Thus maintaining its state
 // closureFuncTwo();
+
+
+/*  CASE 3:
+    Creating a function factory with 
+    a closure. Simple example to make
+    a multiplier using a closure
+*/
+
+// Argument is in the lexical environment
+function makeMultiplier(x) {
+    // Return function with
+    // enclosed "x" in the lexical environment 
+    return function(y) {
+        return x * y;
+    }
+}
+
+// Factory of multipliers by a particular number
+// Has numbers 2,4,5 stored in their respective "x"
+// lexical environment
+var multiplyByTwo = makeMultiplier(2);
+var multiplyByFour = makeMultiplier(4);
+var multiplyByFive = makeMultiplier(5);
+
+console.log(multiplyByTwo(3))
+console.log(multiplyByFour(3))
+console.log(multiplyByFive(3))
