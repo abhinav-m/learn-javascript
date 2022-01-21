@@ -72,22 +72,23 @@
    Same concept as a closure but
    with fancy IIFE
 // */
-for (var j = 1; j <= 5; j++) {
-  (function(closure_j) {
-    setTimeout(function() {
-      console.log(closure_j);
-    }, closure_j * 1000);
-  })(j);
-}
-
-// //Using an anonymous function for IIFE , arrow function inside.
 // for (var j = 1; j <= 5; j++) {
-//   (function(j) {
-//     setTimeout(() => {
-//       console.log(j);
-//     }, j * 1000);
+//   (function(closure_j) {
+//     setTimeout(function() {
+//       console.log(closure_j);
+//     }, closure_j * 1000);
 //   })(j);
 // }
+
+//Using an anonymous function for IIFE , arrow function inside.
+// Same result due to the closure being formed by the IIFE
+for (var j = 1; j <= 5; j++) {
+  (function(j) {
+    setTimeout(() => {
+      console.log(j);
+    }, j * 1000);
+  })(j);
+}
 
 // //Using an arrow function for IIFE, and arrow function inside.
 // for (var j = 1; j <= 5; j++) {
