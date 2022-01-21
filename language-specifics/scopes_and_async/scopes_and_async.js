@@ -43,7 +43,9 @@
     let is block scoped, thus each
     iteration causes a new value of 
     variable to be referenced from inside 
-    setTimeout function.
+    setTimeout function. 
+    The previous "j" values changes after 
+    one iteration of the loop ( block )
 
 */
 
@@ -60,19 +62,23 @@
 //   }, j * 1000);
 // }
 
+
+
 /* Case 4: 
    Wrapping setTimeout in an IIFE to 
    create a closure, and bind each 
    variable (declared using var)
    in the loop iteration.
+   Same concept as a closure but
+   with fancy IIFE
 // */
-// for (var j = 1; j <= 5; j++) {
-//   (function(j) {
-//     setTimeout(function() {
-//       console.log(j);
-//     }, j * 1000);
-//   })(j);
-// }
+for (var j = 1; j <= 5; j++) {
+  (function(closure_j) {
+    setTimeout(function() {
+      console.log(closure_j);
+    }, closure_j * 1000);
+  })(j);
+}
 
 // //Using an anonymous function for IIFE , arrow function inside.
 // for (var j = 1; j <= 5; j++) {
