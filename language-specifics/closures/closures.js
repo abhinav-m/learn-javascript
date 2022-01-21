@@ -1,4 +1,5 @@
 /*  DEFINITION:
+    (Taken from MDN)
     Closures are a combination of the function enclosed or bundled together
     with references to its surrounding state (lexical environment)
     https://stackoverflow.com/questions/12599965/lexical-environment-and-function-scope
