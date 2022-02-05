@@ -127,3 +127,17 @@ to all objects of type Car, and then overwrites
  
  For more information, see prototype.
 */
+
+// Question 3
+
+const a = () => {}
+function B() {
+
+}
+
+console.log(typeof a)
+console.log(typeof B)
+console.log(Object.getPrototypeOf(a))
+console.log(Object.getPrototypeOf(B))
+console.log(a.prototype)
+console.log(B.prototype)
