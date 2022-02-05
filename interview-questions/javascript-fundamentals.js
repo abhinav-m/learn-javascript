@@ -141,3 +141,15 @@ console.log(Object.getPrototypeOf(a))
 console.log(Object.getPrototypeOf(B))
 console.log(a.prototype)
 console.log(B.prototype)
+
+/*
+Arrow functions can never have duplicate named parameters, whether in strict or non-strict mode.
+Arrow functions do not have an arguments binding. 
+However, they have access to the arguments object of the closest non-arrow parent function.
+ Named and rest parameters are heavily relied upon to capture the arguments passed to arrow functions.
+Arrow functions can never be used as constructor functions. 
+Hence, they can never be invoked with the new keyword. 
+As such, a prototype property does not exist for an arrow function.
+The value of this inside an arrow function remains the same throughout the lifecycle
+ of the function and is always bound to the value of this in the closest non-arrow parent function.
+*/
