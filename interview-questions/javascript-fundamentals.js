@@ -175,13 +175,15 @@ function ColoredTriangle(color) {
   this.color = color;
 }
 
-const redTriangle = new ColoredTriangle('Red');
+
 // Inheriting from triangle
 ColoredTriangle.prototype = triangle;
 
+// Instantiating
+const redTriangle = new ColoredTriangle('Red');
+
 // Prints inherited property as well as the object properties
 // (looks up prototype chain)
-// 
 for (const prop in redTriangle){
   console.log(`redTriangle.${prop}=${redTriangle[prop]}`)
 }
@@ -198,4 +200,43 @@ for (const prop in redTriangle){
   }
 }
 
-// To avoid en
+/*
+The for...in statement iterates over 
+the enumerable properties of an object.
+
+The for...of statement iterates over 
+values that the iterable object defines to be iterated over.
+
+Examples of iterable objects include:
+Arrays, Maps, Sets, Custom implemented iterable objects using Symbol.iterator
+and Generators returning iterables
+*/
+
+// Prints all values
+for (const a in [1,2,3,4]){
+  console.log(a)
+}
+
+
+Object.prototype.objCustom = function() {};
+Array.prototype.arrCustom = function() {};
+
+const iterable = [3, 5, 7];
+iterable.foo = 'hello';
+
+// Prints over all enumerable + inherited properties
+for (const i in iterable) {
+  console.log(i); // logs "0", "1", "2", "foo", "arrCustom", "objCustom"
+}
+
+// Prints over own properties
+for (const i in iterable) {
+  if (iterable.hasOwnProperty(i)) {
+    console.log(i); // logs "0", "1", "2", "foo"
+  }
+}
+
+// Prints all values of iterable
+for (const i of iterable) {
+  console.log(i); // logs 3, 5, 7
+}
