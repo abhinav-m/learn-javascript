@@ -153,3 +153,49 @@ As such, a prototype property does not exist for an arrow function.
 The value of this inside an arrow function remains the same throughout the lifecycle
  of the function and is always bound to the value of this in the closest non-arrow parent function.
 */
+
+/* 
+  Difference between for in 
+  and for of
+*/
+
+const triangle = {
+  a:1,
+  b:2,
+  c:3
+}
+
+
+// For in loop iterates over enumerable properties of object
+for (let prop in triangle) {
+  console.log(`triangle.${prop}=${triangle[prop]}`)
+}
+
+function ColoredTriangle(color) {
+  this.color = color;
+}
+
+const redTriangle = new ColoredTriangle('Red');
+// Inheriting from triangle
+ColoredTriangle.prototype = triangle;
+
+// Prints inherited property as well as the object properties
+// (looks up prototype chain)
+// 
+for (const prop in redTriangle){
+  console.log(`redTriangle.${prop}=${redTriangle[prop]}`)
+}
+
+// This is because 'in' keyword looks up prototype chain
+// as well itself
+console.log(a in redTriangle)
+
+// To correct add hasOwnProperty check
+for (const prop in redTriangle){
+  // Doesn't lookup prototype chain
+  if (redTriangle.hasOwnProperty(prop)) {
+    console.log(`redTriangle.${prop}=${redTriangle[prop]}`)
+  }
+}
+
+// To avoid en
