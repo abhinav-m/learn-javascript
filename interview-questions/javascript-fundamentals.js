@@ -1,4 +1,4 @@
-
+"use strict";
 // Q1
 // What happens when we run the following snippet?
 // In other words, what happens when we try to 
@@ -240,3 +240,117 @@ for (const i in iterable) {
 for (const i of iterable) {
   console.log(i); // logs 3, 5, 7
 }
+
+/*
+ Question 5 - Closure to create a private counter
+*/
+
+function Counter(base = 0) {
+  var _count = base
+  return {
+    increment: () => {_count += 1},
+    get : () => _count,
+    decrement: () => {_count -= 1}
+  }
+
+}
+
+let cnt = Counter(0)
+
+console.log(cnt.get())
+cnt.increment()
+console.log(cnt.get())
+cnt.decrement()
+console.log(cnt.get())
+cnt.increment()
+cnt.increment()
+console.log(cnt.get())
+
+
+
+/*
+  Question 6:
+  IIFE executes , what will be the output
+*/
+// (function() {
+//   var a = b = 5;
+// })();
+
+// // Answer 5
+// console.log(b);
+
+/*
+  Above expression gets expanded to
+  var a= b;
+  b = 5;
+  b is NOT declared in the function anywhere
+  thus gets declared in global scope thus gets logged.
+*/
+
+/*  
+  Question 6: Explain hoisting with examples
+*/
+
+hoisted_1 = 23
+console.log(hoisted_1)
+var hoisted_1;
+
+
+hoisted_function_2()
+
+
+function hoisted_function_2() {
+  console.log("hoisted function 2")
+}
+
+// NOTE: IMPORTANT only declarations are hoisted not initializationss
+console.log(hoisted_3)
+hoisted_3 = "hoisted_3"
+var hoisted_3;
+
+
+
+hoisted_4 = "hoisted_4"
+console.log(hoisted_4)
+var hoisted_4;
+
+
+/*
+  Question 7
+  What is event driven programming
+*/
+
+
+
+/*
+  Question 8
+Create a function pipe that performs 
+left-to-right function composition by returning 
+a function that accepts one argument.
+
+*/
+
+function pipe(...fns) {
+  const fnArguments = Array(...fns)
+  return function(x) {
+    let result = null;
+    console.log(fns)
+    fnArguments.forEach(fn => {
+      if(!result) {
+        result = fn(x)
+      } else {
+        result = fn(result)
+      }
+      console.log(result)
+    })
+
+    return result
+  }
+  
+}
+
+const square = v => v * v
+const double = v => v * 2
+const addOne = v => v + 1
+const res = pipe(square, double, addOne)
+console.log(res(3))
