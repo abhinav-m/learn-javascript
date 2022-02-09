@@ -30,6 +30,12 @@ As the second line would overwrite the value of onclick set by the first. This w
 myElement.addEventListener('click', functionA);
 myElement.addEventListener('click', functionB);
 Both functions would now run when the element is clicked.
+
+Another note (After encountering an hour of bug downtime): 
+If you try to add some content using onclick method and innerHTML
+If the element being clicked on is INSIDE the container, it will only work once.
+This is because the event handler is added inline and adding to innerHTML removes
+existing html then adds it back. Thus not keeping original function
 */
 
 
