@@ -1,4 +1,4 @@
-"use strict";
+
 // Q1
 // What happens when we run the following snippet?
 // In other words, what happens when we try to 
@@ -15,6 +15,8 @@
 // r gets the value of 3
 // n gets reference error because its defined inside an IIFE and 
 // doesnt pollute global scope
+
+
 
 
 // Q2
@@ -323,7 +325,7 @@ var hoisted_4;
 
 
 /*
-  Question 8
+Question 8
 Create a function pipe that performs 
 left-to-right function composition by returning 
 a function that accepts one argument.
@@ -354,3 +356,123 @@ const double = v => v * 2
 const addOne = v => v + 1
 const res = pipe(square, double, addOne)
 console.log(res(3))
+
+
+/* 
+   Question 9 
+   m
+*/
+var myObject = {
+  property: this,
+  regularFunction: function() {
+    return this
+  },
+  arrowFunction: () => {
+    return this
+  },
+  iife: (function() {
+    return this
+  })()
+}
+console.log(myObject.regularFunction())// myObject because executed in myObject context
+console.log(myObject["regularFunction"]())// myObject because executed in myObject context
+
+console.log(myObject.property) // NOT myObject; lexical `this` ie, global object
+console.log(myObject.arrowFunction()) // NOT myObject; lexical `this` ie, global object
+console.log(myObject.iife)// NOT myObject; lexical `this` because wrapped and returns lexical this
+const regularFunction = myObject.regularFunction // Here we take a reference to the function
+console.log(regularFunction()) // NOT myObject; lexical `this`,  because executed in global context
+
+
+
+/* 
+    Question 9:
+    Write an example function doing the same job as bind
+
+*/
+
+function newBind(fn,ctx) {
+  return function () {
+    return fn.call(ctx)
+  }
+}
+
+
+function example() {
+  console.log(this)
+}
+
+const boundTest = newBind(example,{a:true})
+
+boundTest.call({b:true})
+
+// Returns  a function which applys all the argument and context passed to the first function
+const newBindArrow = (fn,context) => (...args) => fn.apply(context,args)
+
+const boundTest2 = newBindArrow(example,{"abc":true})
+
+// Still runs with bound value
+boundTest2.call({"xyz":true})
+
+/*  Q 10
+    Output of this function is 
+    undefined due to hoisting
+    of variable. Use strict prevents hoisting
+
+*/
+var foo = 1
+var foobar = function() {
+  console.log(foo)
+  var foo = 2
+}
+foobar()
+
+/* 
+  Q 11
+  Strict mode
+  Including 'use strict' at the beginning of your JavaScript source file enables strict mode, 
+  which enforces more strict parsing and error handling of JavaScript code.
+
+  In non-strict mode, global this is the global object (window in browsers), while in strict mode global this is undefined.
+
+  It is considered a good practice and offers a lot of benefits, such as:
+
+  Easier debugging due to eliminating silent errors.
+  Disallows variable redefinition.
+  Prevents accidental global variables.
+  Oftentimes provides increased performance over identical code that is not running in strict mode.
+  Simplifies eval() and arguments.
+  Helps make JavaScript more secure.
+  Good to hear
+  Eliminates this coercion, throwing an error when this references a value of null or undefined.
+
+  Throws an error on invalid usage of delete.
+
+  Prohibits some syntax likely to be defined in future versions of ECMAScript
+
+*/
+
+/* 
+  Q 12: Explain callbacks
+*/
+
+// Callbacks are functions which are executed 
+// at a later time. They can be synchronous or 
+// asynchronous
+
+// An example of synchronous function
+function mapFunc(array,callback) {
+    const result = []
+    for(let i = 0;i<array.length;i++) {
+      result.push(callback(array[i]),i) 
+    }
+    return result
+}
+
+// An example of asynchronous callback would be
+// Logs clicked when function is clicked
+function onClickFunc() {
+  console.log('clicked')
+}
+
+document.addEventListener('click',onClickFunc)
