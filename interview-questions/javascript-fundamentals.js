@@ -476,3 +476,32 @@ function onClickFunc() {
 }
 
 document.addEventListener('click',onClickFunc)
+
+
+/* 
+  Q 13
+  Difference between expression and statement
+
+*/
+
+// Expression produces a value of some sort
+console.log(5===5)
+console.log("abc".length)
+console.log(5+5)
+
+
+// Statement is used to perform an action or just the declaration
+var statTest = 5;
+// Defining the statement function
+function statement() {
+
+}
+// Expression statement
+// Since RHS evaluates to an expression
+// and LHS is a statement
+var testStatement = y>= 0? x: y;
+
+// Function expression
+var testFunc = function(x,y) {
+  return x +y
+}
