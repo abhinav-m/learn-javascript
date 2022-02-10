@@ -310,6 +310,18 @@ console.log(hoisted_3)
 hoisted_3 = "hoisted_3"
 var hoisted_3;
 
+// Only function declarations are hoisted in JavaScript, 
+//function expressions are not hoisted.
+// For example: this code won’t work.
+
+helloWorld();  // TypeError: helloWorld is not a function
+var helloWorld = function(){
+  console.log('Hello World!');
+}
+
+// Similarly, classes are hoisted but not class expressions
+
+
 
 
 hoisted_4 = "hoisted_4"
@@ -475,7 +487,7 @@ function onClickFunc() {
   console.log('clicked')
 }
 
-document.addEventListener('click',onClickFunc)
+// document.addEventListener('click',onClickFunc)
 
 
 /* 
@@ -499,9 +511,108 @@ function statement() {
 // Expression statement
 // Since RHS evaluates to an expression
 // and LHS is a statement
+const y =5;
+const x = 3;
 var testStatement = y>= 0? x: y;
 
 // Function expression
 var testFunc = function(x,y) {
   return x +y
 }
+
+/* 
+  Q 13:
+  What does 0.1 + 0.2 === 0.3 
+  evaluate to?
+*/
+
+//Answer False
+console.log(0.1+0.2)
+
+// JS uses 64 bit floating numbers
+// causing math precision errors
+// To remedy this, following can be used:
+
+function almostEqual(a,b,epsilon=0.0001) {
+  return Math.abs(a-b) <= epsilon
+}
+
+console.log(almostEqual(0.1+0.2,0.3))
+
+/*
+  Q:14
+  Is JS pass by value or 
+  pass by reference
+*/
+
+// JS is always pass by value but in case of objects
+// a reference to the object is passed
+
+/* 
+  Q:15
+  Difference between
+  var,let, const and no keyword
+*/
+
+// No keyword binds to global scope
+// ie, window in dom and global in node.js
+
+// var function levels scope, goes to the top
+
+//let and const are block level, const cant be reassigned
+
+// var i will have value 10 after stack empties
+for (var i = 0; i < 10; i++) {
+  setTimeout(() => {
+    // logs `10` ten times
+    console.log(i)
+  })
+}
+
+/* Solutions with `var` */
+for (var i = 0; i < 10; i++) {
+  // Passed as an argument will use the value as-is in
+  // that point in time
+  setTimeout(console.log, 0, i)
+}
+
+for (var i = 0; i < 10; i++) {
+  // Create a new function scope that will use the value
+  // as-is in that point in time
+  ;(i => {
+    setTimeout(() => {
+      console.log(i)
+    })
+  })(i)
+}
+
+// solution with let
+// For each iteration, assigns a new i value
+for (let i = 0; i < 10; i++) {
+  setTimeout(() => {
+    // logs 0, 1, 2, 3, ...
+    console.log(i)
+  })
+}
+
+const myObject = {}
+myObject.prop = "hello!" // No error
+myObject = "hello" // Error
+
+// All declarations are hoisted to the top of their scope.
+
+// However, with let and const there is a concept 
+// called the temporal dead zone (TDZ). 
+// While the declarations are still hoisted, 
+// there is a period between entering scope
+//  and being declared where they cannot be accessed.
+
+/* 
+
+so are let and const variables not hoisted?
+The answer is a bit more complicated than that.
+All declarations (function, var, let, const and class)
+ are hoisted in JavaScript, while the var declarations 
+ are initialized with undefined,
+ but let and const declarations remain uninitialized.
+*/
