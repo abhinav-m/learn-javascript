@@ -314,10 +314,10 @@ var hoisted_3;
 //function expressions are not hoisted.
 // For example: this code won’t work.
 
-helloWorld();  // TypeError: helloWorld is not a function
-var helloWorld = function(){
-  console.log('Hello World!');
-}
+// helloWorld();  // TypeError: helloWorld is not a function
+// var helloWorld = function(){
+//   console.log('Hello World!');
+// }
 
 // Similarly, classes are hoisted but not class expressions
 
@@ -362,12 +362,14 @@ function pipe(...fns) {
   }
   
 }
-
+const pipeArrow = (...fns) => x=>  fns.reduce((a,f) => f(a),x)
 const square = v => v * v
 const double = v => v * 2
 const addOne = v => v + 1
 const res = pipe(square, double, addOne)
 console.log(res(3))
+const res2 = pipeArrow(square,double,addOne)
+console.log("PIPEARROW",res2(3))
 
 
 /* 
@@ -595,9 +597,9 @@ for (let i = 0; i < 10; i++) {
   })
 }
 
-const myObject = {}
-myObject.prop = "hello!" // No error
-myObject = "hello" // Error
+// const myObject = {}
+// myObject.prop = "hello!" // No error
+// myObject = "hello" // Error
 
 // All declarations are hoisted to the top of their scope.
 
